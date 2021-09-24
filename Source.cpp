@@ -28,31 +28,44 @@ public:
 
 	bool isreleased(string connectionProtocol1) {
 
+		static singleton* instanceinst;
+
+		if (connectionProtocol1 == "http") {
+			instanceinst = instance;
+		}
+
+		else if (connectionProtocol1 == "ssh") {
+			instanceinst = instance1;
+		}
+
+		else if (connectionProtocol1 == "ftp") {
+			instanceinst = instance2;
+		}
+
+		else if (connectionProtocol1 == "scp") {
+			instanceinst = instance3;
+		}
+
+		else if (connectionProtocol1 == "telnet") {
+			instanceinst = instance4;
+		}
 
 
 
 
-		if (instance != 0) {
-			instance = 0;
+		if (instanceinst != 0) {
+			instanceinst = 0;
 			cout << "True" << endl;
 			return true;
 
 		}
-		else
+	
+else
 		{
 			cout << "False" << endl;
 			return false;
 
 		}
-
-
-
-
-
-
-
-
-
 
 	}
 
