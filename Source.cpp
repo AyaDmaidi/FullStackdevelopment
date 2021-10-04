@@ -1,236 +1,412 @@
-// Online C++ compiler to run C++ program online
 # include <iostream>
 # include <string>
-# include<map>
-
+#include <list>
 using namespace std;
 
-class singleton {
 
-private:
-
-	static singleton* instance;
-	static singleton* instance1;
-	static singleton* instance2;
-	static singleton* instance3;
-	static singleton* instance4;
-
+class protocol {
 
 public:
 
+    static protocol* instancehttp;
+	static protocol* instancessh;
+	static protocol* instancetelnet;
+	static protocol* instancescp;
+	static protocol* instanceftp;
+	static string HTTP;
+	static string SSH;
+	static string TELNET;
+	static string SCP;
+	static string FTP;
+	static int  max;
+	static list<string>connections;
 
 
-	static singleton* getinstance(string connectionProtocol);
+	protocol* getinstance1(string p1);
 
-	string send(string message) { ///////////// send function////////
-		return message;
+    bool isrelease(string connectionprotocol3); 	
+
+
+	
+	/// ///// send function ////////////
+	
+
+	void send(string message) {
+		cout << endl;
+		cout << "The new connection is :" << message << endl;
 	}
 
-	bool isreleased(string connectionProtocol1) {
 
-		static singleton* instanceinst;
-
-		if (connectionProtocol1 == "http") {
-			instanceinst = instance;
-		}
-
-		else if (connectionProtocol1 == "ssh") {
-			instanceinst = instance1;
-		}
-
-		else if (connectionProtocol1 == "ftp") {
-			instanceinst = instance2;
-		}
-
-		else if (connectionProtocol1 == "scp") {
-			instanceinst = instance3;
-		}
-
-		else if (connectionProtocol1 == "telnet") {
-			instanceinst = instance4;
-		}
-
-
-
-
-		if (instanceinst != 0) {
-			instanceinst = 0;
-			cout << "True" << endl;
-			return true;
-
-		}
 	
-else
-		{
-			cout << "False" << endl;
-			return false;
+	/// ///////////////// function to return the current connections//////////////////////
+	
+	void getcurrentconnection() {
 
+		cout << endl;
+
+		cout << "The cuerrent connections are:" << endl;
+
+		for (string val : connections) {
+
+			cout << val << ',';
+
+			cout << endl;
+			
 		}
+	}
+
+	
+};
+
+
+/// /////////////////////////////////////////////////////////////////////////////
+
+
+class HTTP :public protocol {
+
+public :
+
+	protocol*getinstance1(string p1) {
+
+		if (p1 == "http") {
+
+			if (protocol::max < 3) {
+
+				if (instancehttp == 0) {
+
+
+					instancehttp = new protocol;
+					connections.push_back(p1);
+					cout << endl;
+					cout << "create new connection" << endl;
+					max++;
+					return instancehttp;}
+				
+				else if (instancehttp != NULL) {
+					cout << endl;
+					cout << "connection already exist " << endl;
+					return instancehttp;}}
+				
+
+			
+			else {
+				cout << endl;
+				cout << "You can't create more than 3 connections" << endl;}}}
+
+			
+		
+	
+
+	
+	/// //////////////////////////////////////////////////////////////////////
+	
+	bool isrelease(string connectionprotocol3) {
+
+		if (connectionprotocol3 == "http") {
+
+			if (instancehttp != NULL) {
+
+				instancehttp = NULL;
+				max--;
+				connections.remove(connectionprotocol3);
+				cout << endl;
+				cout << "The connection delete" << endl;
+				return true;
+			}
+
+
+			else {
+				cout << endl;
+				cout << "This connection does not exist " << endl;
+				return false;
+			}
+		}
+
+
+}
+
+	};
+
+/// ///////////////////////////////////////////////////////////////////////////////////////
+
+class SSH :public protocol {
+
+public:
+	protocol* getinstance1(string p1) {
+
+		if (p1 == "ssh") {
+
+			if (protocol::max < 3) {
+
+				if (instancessh== 0) {
+
+
+					instancessh= new protocol;
+					connections.push_back(p1);
+					cout << endl;
+					cout << "create new connection" << endl;
+					max++;
+					return instancessh;
+				}
+				else if (instancessh != NULL) {
+					cout << endl;
+					cout << "connection already exist " << endl;
+					return instancessh;
+				}
+
+			}
+			else {
+				cout << endl;
+				cout << "You can't create more than 3 connections" << endl;}}}
+
+			
+		
+	
+	
+	/// ///////////////////////////////////////////////////////////////////////
+	
+	bool isrelease(string connectionprotocol3) {
+
+		if (connectionprotocol3 == "ssh") {
+
+			if (instancessh != NULL) {
+
+				instancessh = NULL;
+				max--;
+				connections.remove(connectionprotocol3);
+				cout << endl;
+				cout << "The connection delete" << endl;
+				return true;
+			}
+
+
+			else {
+				cout << endl;
+				cout << "This connection does not exist " << endl;
+				return false;}}}};
+			
+		
+
+/// /////////////////////////////////////////////////////////////////////////////
+
+class FTP :public protocol {
+
+public:
+	protocol* getinstance1(string p1) {
+
+		if (p1 == "ftp") {
+
+			if (protocol::max < 3) {
+
+				if (instanceftp == 0) {
+
+
+					instanceftp = new protocol;
+					connections.push_back(p1);
+					cout << endl;
+					cout << "create new connection" << endl;
+					max++;
+					return instanceftp;
+				}
+				else if (instanceftp != NULL) {
+					cout << endl;
+					cout << "connection already exist " << endl;
+					return instanceftp;
+				}
+
+			}
+			else {
+				cout << endl;
+				cout << "You can't create more than 3 connections" << endl;
+
+			}
+		}
+	}
+
+	/// /////////////////////////////////////////////////////////////////////////////////
+	
+	bool isrelease(string connectionprotocol3) {
+
+		if (connectionprotocol3 == "ftp") {
+
+			if (instanceftp != NULL) {
+
+				instanceftp = NULL;
+				max--;
+				connections.remove(connectionprotocol3);
+				cout << endl;
+				cout << "The connection delete" << endl;
+				return true;
+			}
+
+
+			else {
+				cout << endl;
+				cout << "This connection does not exist " << endl;
+				return false;
+			}
+		}
+
 
 	}
 
 
 };
 
+/// /////////////////////////////////////////////////////////////////////////////////
 
 
+class SCP :public protocol {
 
-singleton* singleton::instance = 0;
-singleton* singleton::instance1 = 0;
-singleton* singleton::instance2 = 0;
-singleton* singleton::instance3 = 0;
-singleton* singleton::instance4 = 0;
+public:
+	protocol* getinstance1(string p1) {
 
+		if (p1 == "scp") {
 
+			if (protocol::max < 3) {
 
-/// ////////////////  function getinstance ( string connectionProtocol)//////////////
-
-singleton* singleton::getinstance(string connectionProtocol) {
-
-	string arr = connectionProtocol;
-	cout << connectionProtocol << "," << endl;
-
-	/// //////////////////////////////////// the part to give instance //////////////////////////
-
-	if (instance == 0) {
-		if (connectionProtocol == "http") {
-			instance = new singleton;
-			return instance;
+				if (instancescp == 0) {
 
 
-		}
-	}
-
-
-
-	else if (instance1 == 0) {
-		if (connectionProtocol == "ssh") {
-			instance1 = new singleton;
-			return instance1;
-
-
-		}
-	}
-
-
-
-	else if (instance2 == 0) {
-		if (connectionProtocol == "ftp") {
-			instance2 = new singleton;
-			return instance2;
-
-		}
-	}
-
-
-
-	else if (instance3 == 0) {
-		if (connectionProtocol == "scp") {
-			instance3 = new singleton;
-			return instance3;
-
-		}
-	}
-
-
-
-	else if (instance4 == 0) {
-		if (connectionProtocol == "telnet") {
-			instance4 = new singleton;
-			return instance4;
-
-		}
-	}
-
-
-	/// //////////////////////////////////////////////////////////////////
-
-
-
-	/// ///////////////////////////////   check if there's current instance ///////////////
-
-	if (instance4 != 0) {
-		return instance4;
-	}
-
-	else if (instance3 != 0) {
-
-		return instance3;
-	}
-
-	else if (instance2 != 0) {
-
-		return instance2;
-	}
-	else if (instance1 != 0) {
-		return instance1;
-	}
-
-	else if (instance != 0) {
-
-
-		return instance;
-	}
-
-	////////////////////////////////////////////////////////
-}
-
-
-void count(string arr[5], string pro[5]) {
-	int counter = 0;
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++) {
-			if (pro[i] == arr[j]) {
-				counter++;
+					instancescp = new protocol;
+					connections.push_back(p1);
+					cout << endl;
+					cout << "create new connection" << endl;
+					max++;
+					return instancescp;
+				}
+				else if (instancescp != NULL) {
+					cout << endl;
+					cout << "connection already exist " << endl;
+					return instancescp;
+				}
 
 			}
-		}
-
-	}
-
-	if (counter >= 3) {
-		cout << "You can't create more than 3 connections " << endl;
-		return;
-	}
-
-}
+			else {
+				cout << endl;
+				cout << "You can't create more than 3 connections" << endl;}}}
 
 
+	/////////////////////////////////////////////////////////////////////////////////////
+
+
+	bool isrelease(string connectionprotocol3) {
+
+		if (connectionprotocol3 == "scp") {
+
+			if (instancescp != NULL) {
+
+				instancescp = NULL;
+				max--;
+				connections.remove(connectionprotocol3);
+				cout << endl;
+				cout << "The connection delete" << endl;
+				return true;}
+			
+
+
+			else {
+				cout << endl;
+				cout << "This connection does not exist " << endl;
+				return false;}}}};
+			
+		
+
+
+	
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
+class TELNET :public protocol {
+
+public:
+	protocol* getinstance1(string p1) {
+
+		if (p1 == "telnet") {
+
+			if (protocol::max < 3) {
+
+				if (instancetelnet == 0) {
 
 
+					instancetelnet = new protocol;
+					connections.push_back(p1);
+					cout << endl;
+					cout << "create new connection" << endl;
+					max++;
+					return instancetelnet;}
+				
+				else if (instancetelnet != NULL) {
+					cout << endl;
+					cout << "connection already exist " << endl;
+					return instancetelnet;}}
+				
+
+			
+			else {
+				cout << endl;
+				cout << "You can't create more than 3 connections" << endl;}}}
+		
+
+			////////////////////////////////////////////////////////////////////
+	
+
+	bool isrelease(string connectionprotocol3) {
+
+		if (connectionprotocol3 == "telnet") {
+
+			if (instancetelnet != NULL) {
+
+				instancetelnet = NULL;
+				max--;
+				connections.remove(connectionprotocol3);
+				cout << endl;
+				cout << "The connection delete" << endl;
+				return true;}
+			
+
+
+			else {
+				cout << endl;
+				cout << "This connection does not exist " << endl;
+				return false;}}}};
+			
+		
+
+/// ////////////////////////////////////////////////////////////////////////////////////
+
+int protocol::max = 0;
+protocol* protocol::instancehttp = 0;
+protocol* protocol::instancessh = 0;
+protocol* protocol::instancetelnet = 0;
+protocol* protocol::instancescp = 0;
+protocol* protocol::instanceftp = 0;
+list <string>protocol::connections = list<string>();
 
 
 int main() {
 
 
-	singleton obj;
-	string arr89[5] = { "http","ftp","ssh","scp","telnet" };
+	HTTP c;
+	TELNET c1;
+	SCP c2;
+	FTP c3;
+	SSH c5;
 
-	string parameter[5] = { "http","ssh","ftp" }; /////// add every protocol you pass it to function to this list/////
-	cout <<"give instance (http) :  "<< obj.getinstance("http") << endl;
-	cout << "**************************" << endl;
-	cout <<"release (http) : "<< obj.isreleased("http") << endl;
-	cout << "**************************" << endl;
-	cout <<" give instance (http) : "<< obj.getinstance("http") << endl;
-	cout << "**************************" << endl;
-	cout <<"get instance(http): " <<obj.getinstance("http") << endl;
-	cout << "**************************" << endl;
+	c.getinstance1("http");
 
+	c.getinstance1("http");
 
-	cout << "give instance (ssh) : "<<obj.getinstance("ssh") << endl;
-	cout << "**************************" << endl;
+	c1.getinstance1("telnet");
 
-	cout <<"  give instance (ftp) : "<< obj.getinstance("ftp") << endl;
-	cout << "**************************" << endl;
-	count(arr89, parameter); /// call count function to check if there's more than three connections"
-	cout << "**************************************************************" << endl;
-
-
+	c1.getcurrentconnection();
 	
-
-
+	c2.getinstance1("scp");
+	
+	
+	c.isrelease("http");
+	protocol f;
+	f.getcurrentconnection();
 	return 0;
 }
