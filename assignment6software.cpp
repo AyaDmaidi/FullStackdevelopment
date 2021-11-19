@@ -207,37 +207,6 @@ const char* DayName(int day) {
     }
 }
 
-int GetResult(int year,int dayNumber,int month,int day) {
-    int monthValue, t2;
-    while (year >= 100) {
-        dayNumber = dayNumber + 5;
-        year = year - 100;
-    }
-
-
-    dayNumber = (dayNumber % NUMBER_OF_DAYS);
-    monthValue = ((year - 1) / 4);
-    t2 = (year - 1) - monthValue;
-    monthValue = (monthValue * 2) + t2;
-    monthValue = (monthValue % NUMBER_OF_DAYS);
-    dayNumber = dayNumber + monthValue;
-    dayNumber = dayNumber % NUMBER_OF_DAYS;
-    t2 = 0;
-    for (monthValue = 1; monthValue < month; monthValue++) {
-        t2 += GetNumberOfDays(monthValue, year);
-
-    }
-    t2 = t2 + day;
-    t2 = t2 % NUMBER_OF_DAYS;
-    dayNumber = dayNumber + t2;
-    dayNumber = dayNumber % NUMBER_OF_DAYS;
-    if (year > 2000)
-        dayNumber = dayNumber + 1;
-    dayNumber = dayNumber % NUMBER_OF_DAYS;
-    return dayNumber;
-    
-}
-
 
 
 int DayNumber(int day, int month, int year) { 
