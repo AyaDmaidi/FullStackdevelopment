@@ -28,7 +28,7 @@ html,body{
   display: flex;
   justify-content: center;
 }
-.social_icons a{
+#GoogleLogin{
   display: block;
   height: 45px;
   width: 100%;
@@ -36,28 +36,18 @@ html,body{
   text-align: center;
   border-radius: 5px;
   font-size: 20px;
-  color: #fff;
+  color:black;
   text-decoration: none;
   transition: all 0.3s linear;
+  background-color: hsl(288, 59%, 74%);
+
+  background-image:url('bb.png');
 }
-.social_icons a span{
+#GoogleLogin span{
   margin-left: 5px;
   font-size: 18px;
 }
-.social_icons a:first-child{
-  margin-right: 5px;
-  background: #4267B2;
-}
-.social_icons a:first-child:hover{
-  background: #375695;
-}
-.social_icons a:last-child{
-  margin-left: 5px;
-  background: #1DA1F2;
-}
-.social_icons a:last-child:hover{
-  background: #0d8bd9;
-}
+
 form {
   margin-top: 25px;
 }
@@ -87,6 +77,7 @@ form .input_box{
   transform: translateY(-50%);
   color: grey;
 }
+
 form .option_div{
   margin-top: 5px;
   display: flex;
