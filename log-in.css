@@ -9,7 +9,7 @@ html,body{
   display: grid;
   height: 100vh;
   place-items:center;
-  background: #be2edd;
+  background: linear-gradient(  #d496e4 0%, #ff99cc 100%)
 }
 .main_div{
   width: 365px;
@@ -39,9 +39,11 @@ html,body{
   color:black;
   text-decoration: none;
   transition: all 0.3s linear;
-  background-color: hsl(288, 59%, 74%);
-
+  background-color: #db5af8;
+  font-family: "Times New Roman", Times, serif;
+  background-repeat: no-repeat;
   background-image:url('bb.png');
+ 
 }
 #GoogleLogin span{
   margin-left: 5px;
