@@ -1,12 +1,17 @@
 body{
-	background-color: #9b93f5;
+	background-color: #ff99cc;
+	filter: brightness(100%);
 	font-family: 'josefin Sans', Sans-serif;
 }
-img{
+
+.button {
+
+	background-color: #be2edd;
+	color: rgb(213, 220, 226);
+	width: 45.6%; 
 	position: absolute;
-	width: 100%;
-	height: 100%;
-}
+	margin-left: 12.9%;
+  }
 
 .radio-inline{
 	margin: 0px 40px 20px 0px;
