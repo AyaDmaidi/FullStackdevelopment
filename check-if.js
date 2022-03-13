@@ -15,6 +15,8 @@ module.exports = conn;
 
 process.exit();
 
+////  Check if subscribed funciton ////
+
 function Checksubscribed(){
     var username = new List<EmailParameter>
     username.Add(new EmailParameter() ,  Email = " youremail "  );
