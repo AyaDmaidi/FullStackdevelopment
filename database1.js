@@ -13,3 +13,5 @@ connection.connect(function(error){
    }
  });  
 module.exports = connection;
+
+process.exit();
