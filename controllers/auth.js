@@ -2,9 +2,14 @@ const mysql=require("mysql");
 const jwt=require('jsonwebtoken');
 const bcrypt=require('bcryptjs');
 const async = require("hbs/lib/async");
-const { promisify } = require('util');
 const express = require("express");
 const dotenv=require("dotenv");
+
+    
+
+
+
+
 
 
 
@@ -18,14 +23,16 @@ const db= mysql.createConnection({
 });
 
 
-
+/// For regestration page
 exports.register=(req,res)=>{
     console.log(req.body);
 
-    
+  
+const {name,email,password,passwordconfirm,verify}=req.body;
 
 
-    const {name,email,password,passwordconfirm}=req.body;
+////////// Check if email is already exist
+
 
 db.query(' SELECT email FROM users WHERE email=?',[email],async(error,results)=>{
   if(error){
@@ -38,13 +45,17 @@ db.query(' SELECT email FROM users WHERE email=?',[email],async(error,results)=>
       })
 }
 
+////////////  check if the entered password in confirm password field is the same as the first entered password
       else if (password !=passwordconfirm ){
           return res.render('register',{
               message:'password do not match'
+              
 
       });
   
   }
+
+  //////////// Hashing password
 
 let hashpassword=await bcrypt.hash(password,8);
 console.log(hashpassword);
@@ -55,6 +66,8 @@ if (error){
   console.log(error);
 
 }
+
+///////////// If everything done well
 else{
   console.log(results);
   return res.render('register',{
@@ -78,16 +91,16 @@ else{
 
 
 exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password,verify } = req.body;
 
-  // 1) Check if email and password exist
+  // //// Check if email and password exist (Entry of password and email is empty)
   if (!email || !password) {
     return res.status(400).render("login", {
       message: 'Please provide email and password'
     });
   }
 
-  // 2) Check if user exists && password is correct
+  ////// Check if user exists && password is correct
   db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
     console.log(results);
     console.log(password);
@@ -98,17 +111,34 @@ exports.login = async (req, res, next) => {
         message: 'Incorrect email or password'
       });
     } 
+  
     else{
-      return res.redirect('/');
+      if(results[0].verify=='1'){
+        return res.redirect('/');
+      }
+      else {
+        return res.status(403).render("login", {
+          message: 'Your email does not verify'
+          
+        });
 
+
+      }
+      }
+    });
+  }
+          
+        
+        
+        
       
-
-
-    }
+    
+      
+  
 
   
-  });
-};
+
+
 
 
 // Only for rendered pages, no errors!
@@ -147,79 +177,8 @@ exports.isLoggedIn = async (req, res, next) => {
 
 
 
-exports.forgetpassword = async (req, res, next) => {
-  const { email, password } = req.body;
 
-  // 1) Check if email and password exist
-  if ( !password) {
-    return res.status(400).render("forgetpassword", {
-      message: 'Please provide old  password'
-    });
-  }
-  db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
-    console.log(results);
-    console.log(password);
-    const isMatch = await bcrypt.compare(password, results[0].password);
-    console.log(isMatch);
-    if(!results || !isMatch ) {
-      return res.status(401).render("forgetpassword", {
-        message: 'Incorrect email or password'
-      });
-    } 
-    else{
-      return res.redirect('/resetpassword');
-
-      
-
-
-    }
-
-  
-  });
-
-
-  // 2) Check if user exists && password is correct
-
-  
-
-
-
-
-  }
-
-  exports.resetpassword = async (req, res, next) => {
-    const { email, password } = req.body;
-  
-    con.connect(function(err) {
-      if (err) throw err;
-      // if connection is successful
-      con.query("UPDATE users SET password=password WHERE password=oldpassword", function (err, result, fields) {
-        // if any error while executing above query, throw error
-        if (err) throw err;
-        // if there is no error, you have the result
-        console.log(result);
-      });
-    });
-
-
-    
-  
-     
-     
-    }
-
-
-
-
-
-
-
-
-  
-  
-exports.logout = (req, res) => {
-  res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
-  });
-  res.status(200).redirect("/");}
+exports.logout = (req,res) => {
+  res.clearCookie('jwt');
+  res.redirect('/');
+};

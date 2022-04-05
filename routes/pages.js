@@ -33,21 +33,11 @@ router.get('/register',(req,res)=>{
     res.render('register');
 });
 
-router.get('/forgetpassword',(req,res)=>{
-  res.render('forgetpassword');
-
-  
-  
-});
 
 
 
-router.get('/resetpassword',(req,res)=>{
-  res.render('resetpassword');
 
-  
-  
-});
+
 
 
 
