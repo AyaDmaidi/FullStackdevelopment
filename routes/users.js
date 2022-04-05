@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../database1');
+var connection = require('../database.js');
 var nodemailer = require('nodemailer');
 var bcrypt = require('bcrypt');
 var randtoken = require('rand-token');
+code1=Math.floor(Math.random()*100000)+10000;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
 //send email
 function sendEmail(email, token) {
 var email = email;
@@ -11,24 +14,27 @@ var token = token;
 var mail = nodemailer.createTransport({
 service: 'gmail',
 auth: {
-user: '', // Your email id
-pass: '' // Your password
+user: 'aseelhamayel16@gmail.com', // Your email id
+pass: 'aseelbts182001' // Your password
 }
 });
 var mailOptions = {
-from: 'tutsmake@gmail.com',
+from: 'aseelhamayel16@gmail.com',
 to: email,
-subject: 'Reset Password Link - Tutsmake.com',
+subject: 'Send Email',
 html: '<p>You requested for reset password, kindly use this <a href="http://localhost:4000/reset-password?token=' + token + '">link</a> to reset your password</p>'
 };
+
 mail.sendMail(mailOptions, function(error, info) {
 if (error) {
-console.log(1)
+console.log(error)
 } else {
 console.log(0)
 }
 });
 }
+
+
 /* home page */
 router.get('/', function(req, res, next) {
 res.render('index', {
@@ -86,7 +92,8 @@ var type
 var msg
 if (result.length > 0) {
 var saltRounds = 10;
-// var hash = bcrypt.hash(password, saltRounds);
+var hash = bcrypt.hash(password, saltRounds);
+
 bcrypt.genSalt(saltRounds, function(err, salt) {
 bcrypt.hash(password, salt, function(err, hash) {
 var data = {
@@ -98,6 +105,7 @@ if(err) throw err
 });
 });
 type = 'success';
+
 msg = 'Your password has been updated successfully';
 } else {
 console.log('2');
