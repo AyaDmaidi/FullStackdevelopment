@@ -24,6 +24,12 @@ const initialState = {
       : [],
   },
 };
+ shippingAddress: localStorage.getItem('shippingAddress')
+      ? JSON.parse(localStorage.getItem('shippingAddress'))
+      : {},
+  },
+};
+
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -33,3 +39,16 @@ const reducer = combineReducers({
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
+    productList: productListReducer,
+  productDetails: productDetailsReducer,
+  cart: cartReducer,
+  userSignin: userSigninReducer,
+  userRegister: userRegisterReducer,
+});
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  reducer,
+  initialState,
+  composeEnhancer(applyMiddleware(thunk))
+);
+export default store;
